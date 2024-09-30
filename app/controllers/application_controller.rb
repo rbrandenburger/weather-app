@@ -1,4 +1,11 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
+  UnauthorizedError = Class.new(StandardError)
+
+  rescue_from UnauthorizedError, with: :unauthorized_response
+
+  private
+
+  def unauthorized_response
+    render body: nil, status: 403
+  end
 end
