@@ -1,4 +1,4 @@
-class ReadingsController < ApplicationController
+class ReadingsController < ActionController::API
   before_action :authorize_api_key
 
   def create
@@ -8,7 +8,7 @@ class ReadingsController < ApplicationController
       recorded_on: params[:recorded_on]
     )
 
-    status = reading.save ? 201 : 401
+    status = reading.save ? 201 : 400
 
     render body: nil, status: status
   end
