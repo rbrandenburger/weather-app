@@ -24,3 +24,8 @@ bin/rails db:migrate
 bin/rails s -p 3000
 ```
 
+Tests can be run with RSpec:
+```sh
+bundle exec rspec
+```
+
