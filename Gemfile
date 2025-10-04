@@ -57,4 +57,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "rspec-rails"
+  gem "simplecov"
 end

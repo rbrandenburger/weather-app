@@ -1,5 +1,10 @@
 require "rails_helper"
 
+require "simplecov"
+SimpleCov.start do
+  coverage_dir "spec/coverage"
+end
+
 ENV["DEVICE_API_KEY"] = "test_api_key"
 
 RSpec.configure do |config|
