@@ -1,8 +1,8 @@
-RSpec.describe ReadingsController, type: :request do
+RSpec.describe Api::ReadingsController, type: :request do
   let(:send_request) { post(route, params: params, headers: headers) }
 
-  describe "/readings/create" do
-    let(:route) { "/readings/create" }
+  describe "/api/readings" do
+    let(:route) { "/api/readings" }
     let(:headers) { {"x-api-key" => api_key, "content-type" => "application/json"} }
     let(:api_key) { "test_api_key" }
     let(:params) do
@@ -27,7 +27,7 @@ RSpec.describe ReadingsController, type: :request do
       expect { send_request }.to change { StationReading.count }.by(1)
     end
 
-    describe "when given bad params" do
+    describe "when given invalid params" do
       let(:temp_c) { "foo" }
 
       it "returns a 400 status" do
