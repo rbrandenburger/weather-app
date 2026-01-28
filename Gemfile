@@ -61,3 +61,5 @@ group :test do
 end
 
 gem "phlex-rails", "~> 2.1"
+
+gem "tailwindcss-rails", "~> 4.4"
