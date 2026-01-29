@@ -9,4 +9,8 @@ class Views::Base < Components::Base
 
   # More caching options at https://www.phlex.fun/components/caching
   def cache_store = Rails.cache
+
+  def before_template
+    render Components::Header.new
+  end
 end
