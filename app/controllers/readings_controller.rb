@@ -1,7 +1,7 @@
-class ReadingsController < ActionController::API
+class ReadingsController < ApplicationController
   UnauthorizedError = Class.new(StandardError)
 
-  before_action :authorize_api_key
+  before_action :authorize_api_key, except: [:show]
 
   rescue_from UnauthorizedError, with: :unauthorized_response
 
@@ -15,6 +15,10 @@ class ReadingsController < ActionController::API
     status = reading.save ? 201 : 400
 
     render body: nil, status: status
+  end
+
+  def show
+    render Views::Dashboard.new
   end
 
   private

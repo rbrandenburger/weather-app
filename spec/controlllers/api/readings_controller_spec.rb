@@ -1,4 +1,4 @@
-RSpec.describe Api::ReadingsController, type: :request do
+RSpec.describe ReadingsController, type: :request do
   let(:send_request) { post(route, params: params, headers: headers) }
 
   describe "/api/readings" do
