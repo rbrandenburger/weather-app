@@ -1,5 +1,5 @@
 class ReadingsController < ActionController::API
-  before_action :authorize_api_key
+  before_action :authorize_api_key, except: [:latest]
 
   def create
     reading = StationReading.new(
@@ -11,6 +11,14 @@ class ReadingsController < ActionController::API
     status = reading.save ? 201 : 400
 
     render body: nil, status: status
+  end
+
+  def latest
+    body = StationReading.order(:recorded_on).last.as_json
+    
+    body["farenheit_temp"] = (body["celcius_temp"] * 1.8) + 32.0
+
+    render json: body, status: 200
   end
 
   private
