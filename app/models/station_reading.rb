@@ -1,17 +1,17 @@
 class StationReading < ApplicationRecord
-  validates :celcius_temp, numericality: true, presence: true
+  validates :celsius_temp, numericality: true, presence: true
   validates :relative_humidity, numericality: true, presence: true
   validates :recorded_on, presence: true
 
   def fahrenheit_temp
     return @fahrenheit_temp if defined?(@fahrenheit_temp)
 
-    @fahrenheit_temp = celsius_to_fahrenheit(celcius_temp)
+    @fahrenheit_temp = celsius_to_fahrenheit(celsius_temp)
   end
 
   # TODO: Why?
   def fahrenheit_temp=(temp_f)
-    self.celcius_temp = fahrenheit_to_celsius(temp_f)
+    self.celsius_temp = fahrenheit_to_celsius(temp_f)
   end
 
   def dew_point(celsius: true)
@@ -19,7 +19,7 @@ class StationReading < ApplicationRecord
     a = 17.625
     b = 243.04
 
-    rh_factor = Math.log(relative_humidity / 100) + (a * celcius_temp) / (b + celcius_temp)
+    rh_factor = Math.log(relative_humidity / 100) + (a * celsius_temp) / (b + celsius_temp)
 
     dew_point = (b * rh_factor) / (a - rh_factor)
 
@@ -35,7 +35,7 @@ class StationReading < ApplicationRecord
     elsif fahrenheit_temp > 80.0
       heat_index(celsius: celsius)
     else
-      celsius ? celcius_temp : fahrenheit_temp
+      celsius ? celsius_temp : fahrenheit_temp
     end
   end
 

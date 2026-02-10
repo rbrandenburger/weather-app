@@ -7,7 +7,7 @@ class ReadingsController < ApplicationController
 
   def create
     reading = StationReading.new(
-      celcius_temp: params[:temp_c],
+      celsius_temp: params[:temp_c],
       relative_humidity: params[:relative_humidity],
       recorded_on: params[:recorded_on]
     )
@@ -22,8 +22,8 @@ class ReadingsController < ApplicationController
 
     current_weather = {
       "current_temp" => StationReading.order(recorded_on: :desc).first,
-      "highest_temp" => StationReading.where(recorded_on: today).order(celcius_temp: :desc).first,
-      "lowest_temp" => StationReading.where(recorded_on: today).order(celcius_temp: :asc).first
+      "highest_temp" => StationReading.where(recorded_on: today).order(celsius_temp: :desc).first,
+      "lowest_temp" => StationReading.where(recorded_on: today).order(celsius_temp: :asc).first
     }
 
     period_forecast = Api::NwsUtility.get_period_forecast

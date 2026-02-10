@@ -9,13 +9,13 @@ RSpec.describe StationReading do
     let(:subject) { object.fahrenheit_temp }
     let(:object) do
       klass.new(
-        celcius_temp: celcius_temp,
+        celsius_temp: celsius_temp,
         relative_humidity: 10,
         recorded_on: Time.current
       )
     end
 
-    let(:celcius_temp) { 35 }
+    let(:celsius_temp) { 35 }
 
     it "returns the converted temperature" do
       expect(subject).to eq(95)
@@ -26,7 +26,7 @@ RSpec.describe StationReading do
     let(:subject) { object.fahrenheit_temp = temp_f }
     let(:object) do
       klass.new(
-        celcius_temp: 0,
+        celsius_temp: 0,
         relative_humidity: 10,
         recorded_on: Time.current
       )
@@ -34,8 +34,8 @@ RSpec.describe StationReading do
 
     let(:temp_f) { 95 }
 
-    it "updates the celcius_temp" do
-      expect { subject }.to change { object.celcius_temp }.from(0).to(35)
+    it "updates the celsius_temp" do
+      expect { subject }.to change { object.celsius_temp }.from(0).to(35)
     end
   end
 end

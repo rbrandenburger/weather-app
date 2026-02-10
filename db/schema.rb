@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_28_024634) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_10_165520) do
   create_table "station_readings", force: :cascade do |t|
-    t.float "celcius_temp", null: false
+    t.float "celsius_temp", null: false
     t.float "relative_humidity", null: false
     t.datetime "recorded_on", null: false
     t.datetime "created_at", null: false
