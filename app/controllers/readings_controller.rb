@@ -1,5 +1,9 @@
 class ReadingsController < ActionController::API
-  before_action :authorize_api_key, except: [:latest]
+  UnauthorizedError = Class.new(StandardError)
+
+  before_action :authorize_api_key
+
+  rescue_from UnauthorizedError, with: :unauthorized_response
 
   def create
     reading = StationReading.new(
@@ -13,19 +17,15 @@ class ReadingsController < ActionController::API
     render body: nil, status: status
   end
 
-  def latest
-    body = StationReading.order(:recorded_on).last.as_json
-    
-    body["farenheit_temp"] = (body["celcius_temp"] * 1.8) + 32.0
-
-    render json: body, status: 200
-  end
-
   private
 
   def authorize_api_key
     return if request.headers.to_h["HTTP_X_API_KEY"] == ENV["DEVICE_API_KEY"]
 
     raise UnauthorizedError
+  end
+
+  def unauthorized_response
+    render body: nil, status: 403
   end
 end

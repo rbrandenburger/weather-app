@@ -30,10 +30,14 @@ RSpec.describe ReadingsController, type: :request do
     describe "when given bad params" do
       let(:temp_c) { "foo" }
 
-      it "returns a 401 status" do
+      it "returns a 400 status" do
         send_request
 
-        expect(response.status).to eq(401)
+        expect(response.status).to eq(400)
+      end
+
+      it "does not create a reading" do
+        expect { send_request }.not_to change { StationReading.count }
       end
     end
 
@@ -44,6 +48,10 @@ RSpec.describe ReadingsController, type: :request do
         send_request
 
         expect(response.status).to eq(403)
+      end
+
+      it "does not create a reading" do
+        expect { send_request }.not_to change { StationReading.count }
       end
     end
   end
