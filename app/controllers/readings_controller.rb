@@ -18,18 +18,24 @@ class ReadingsController < ApplicationController
   end
 
   def show
-    current_reading = StationReading.last
+    today = Time.now.beginning_of_day..Time.now.end_of_day
+
+    current_weather = {
+      "current_temp" => StationReading.order(recorded_on: :desc).first,
+      "highest_temp" => StationReading.where(recorded_on: today).order(celcius_temp: :desc).first,
+      "lowest_temp" => StationReading.where(recorded_on: today).order(celcius_temp: :asc).first
+    }
 
     period_forecast = Api::NwsUtility.get_period_forecast
     hourly_forecast = Api::NwsUtility.get_hourly_forecast
     sunrise_sunset = Api::SunriseSunsetUtility.get_sunrise_sunset
 
     render Views::Dashboard.new(
-      current_reading: current_reading,
+      current_weather: current_weather,
       forecast: {
         "periods" => period_forecast["periods"][0..3],
         "daily" => format_daily_forecast(period_forecast["periods"]),
-        "hourly" => hourly_forecast["periods"],
+        "hourly" => format_hourly_forecast(hourly_forecast["periods"]),
         "sun_info" => sunrise_sunset
       }
     )
@@ -66,6 +72,12 @@ class ReadingsController < ApplicationController
         # Wind usually stays fairly consistent, but we'll take the daytime speed if available
         "wind_speed" => high_period&.dig("windSpeed") || low_period&.dig("windSpeed")
       }
+    end
+  end
+
+  def format_hourly_forecast(periods)
+    periods.each do |period|
+      period["windSpeed"] = period["windSpeed"].gsub(" mph", "").to_f
     end
   end
 end

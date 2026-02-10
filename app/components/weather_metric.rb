@@ -7,10 +7,15 @@ class Components::WeatherMetric < Components::Base
 
   def view_template
     div(class: "flex justify-between items-baseline") do
-      span(class: "text-sm text-gray-600") { @label }
+      span(class: "flex self-center text-sm text-gray-600") { @label }
 
       div(class: "text-lg font-semibold text-gray-900") do
-        plain @value
+        if @value.is_a?(Phlex::HTML)
+          render @value
+        else
+          plain @value
+        end
+
         if @unit
           span(class: "ml-1 text-xs font-normal text-gray-600 uppercase tracking-tighter") { @unit }
         end

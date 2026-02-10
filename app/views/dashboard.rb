@@ -1,6 +1,6 @@
 class Views::Dashboard < Views::Base
-  def initialize(current_reading:, forecast:)
-    @current_reading = current_reading
+  def initialize(current_weather:, forecast:)
+    @current_weather = current_weather
     @forecast = forecast
   end
 
@@ -16,10 +16,10 @@ class Views::Dashboard < Views::Base
         end
 
         div(class: "text-left flex gap-4 items-center") do
-          current_weather = @forecast["hourly"].first
+          current_hour = @forecast["hourly"].first
           render Components::WeatherIcon.new(
-            icon_url: current_weather["icon"],
-            is_daytime: current_weather["isDaytime"],
+            icon_url: current_hour["icon"],
+            is_daytime: current_hour["isDaytime"],
             classes: "text-5xl"
           )
         end
@@ -28,17 +28,18 @@ class Views::Dashboard < Views::Base
       div(class: "grid grid-cols-1 md:grid-cols-3 gap-6 py-6") do
         # Card 1: Temperature & Extremes
         render Components::WeatherCard.new(title: "Temperature") do
-          render Components::WeatherMetric.new(label: "Current", value: @current_reading.fahrenheit_temp.round.to_s, unit: "°F")
-          render Components::WeatherMetric.new(label: "Feels Like", value: "TODO", unit: "°F")
-          render Components::WeatherMetric.new(label: "High", value: "TODO", unit: "°F")
-          render Components::WeatherMetric.new(label: "Low", value: "TODO", unit: "°F")
+          render Components::WeatherMetric.new(label: "Currently", value: @current_weather["current_temp"].fahrenheit_temp.round.to_s, unit: "°F")
+          render Components::WeatherMetric.new(label: "Feels Like", value: @current_weather["current_temp"].feels_like(@forecast["hourly"].first["windSpeed"], celsius: false).round, unit: "°F")
+          render Components::WeatherMetric.new(label: "Highest Reading Today", value: @current_weather["highest_temp"]&.fahrenheit_temp, unit: "°F")
+          render Components::WeatherMetric.new(label: "Lowest Reading Today", value: @current_weather["lowest_temp"]&.fahrenheit_temp, unit: "°F")
         end
 
         # Card 2: Conditions & Air
         render Components::WeatherCard.new(title: "Atmospherics") do
-          render Components::WeatherMetric.new(label: "Wind", value: "15", unit: "mph")
-          render Components::WeatherMetric.new(label: "Humidity", value: @current_reading.relative_humidity.round.to_s, unit: "%")
-          render Components::WeatherMetric.new(label: "Dew Point", value: @current_reading.dew_point(celsius: false).round.to_s, unit: "°F")
+          render Components::WeatherMetric.new(label: "Wind Speed", value: @forecast["hourly"].first["windSpeed"], unit: "mph")
+          render Components::WeatherMetric.new(label: "Wind Direction", value: Components::WindIcon.new(wind_direction: @forecast["hourly"].first["windDirection"], classes: "text-3xl"))
+          render Components::WeatherMetric.new(label: "Humidity", value: @current_weather["current_temp"].relative_humidity.round.to_s, unit: "%")
+          render Components::WeatherMetric.new(label: "Dew Point", value: @current_weather["current_temp"].dew_point(celsius: false).round.to_s, unit: "°F")
         end
 
         # Card 3: Daylight

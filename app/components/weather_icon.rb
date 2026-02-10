@@ -34,8 +34,7 @@ class Components::WeatherIcon < Components::Base
   def icon_code
     match = @icon_url&.match(/\/(?:day|night)\/([a-z_]+)/)
     code = match ? match[1] : "unknown"
-    pp @icon_url
-    pp code
+
     mapping = ICON_MAPPING[code]
 
     @is_daytime ? mapping[:day] : mapping[:night]
