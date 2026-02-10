@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 @import "../stylesheets/weather-icons.css";
-@import "../stylesheets/weather-icons-winds.css";
+@import "../stylesheets/weather-icons-wind.css";
 
 @theme {
     --font-inter: "Inter", sans-serif;

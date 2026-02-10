@@ -28,10 +28,10 @@ class Views::Dashboard < Views::Base
       div(class: "grid grid-cols-1 md:grid-cols-3 gap-6 py-6") do
         # Card 1: Temperature & Extremes
         render Components::WeatherCard.new(title: "Temperature") do
-          render Components::WeatherMetric.new(label: "Currently", value: @current_weather["current_temp"].fahrenheit_temp.round.to_s, unit: "°F")
+          render Components::WeatherMetric.new(label: "Currently", value: @current_weather["current_temp"].fahrenheit_temp.round, unit: "°F")
           render Components::WeatherMetric.new(label: "Feels Like", value: @current_weather["current_temp"].feels_like(@forecast["hourly"].first["windSpeed"], celsius: false).round, unit: "°F")
-          render Components::WeatherMetric.new(label: "Highest Reading Today", value: @current_weather["highest_temp"]&.fahrenheit_temp, unit: "°F")
-          render Components::WeatherMetric.new(label: "Lowest Reading Today", value: @current_weather["lowest_temp"]&.fahrenheit_temp, unit: "°F")
+          render Components::WeatherMetric.new(label: "Highest Reading Today", value: @current_weather["highest_temp"]&.fahrenheit_temp&.round, unit: "°F")
+          render Components::WeatherMetric.new(label: "Lowest Reading Today", value: @current_weather["lowest_temp"]&.fahrenheit_temp&.round, unit: "°F")
         end
 
         # Card 2: Conditions & Air

@@ -2,6 +2,9 @@ class ReadingsController < ApplicationController
   UnauthorizedError = Class.new(StandardError)
 
   before_action :authorize_api_key, except: [:show]
+ 
+  # Skip CSRF for API actions
+  skip_before_action :verify_authenticity_token, only: [:create]
 
   rescue_from UnauthorizedError, with: :unauthorized_response
 
@@ -18,7 +21,7 @@ class ReadingsController < ApplicationController
   end
 
   def show
-    today = Time.now.beginning_of_day..Time.now.end_of_day
+    today = Time.zone.now.beginning_of_day..Time.zone.now.end_of_day
 
     current_weather = {
       "current_temp" => StationReading.order(recorded_on: :desc).first,
