@@ -1,6 +1,8 @@
 class Components::WeatherIcon < Components::Base
   ICON_MAPPING = {
     "skc" => {day: "wi-day-sunny", night: "wi-night-clear"},
+    "wind_skc" => {day: "wi-day-windy", night: "wi-wind-strong"},
+    "wind_skt" => {day: "wi-day-cloudy-gusts", night: "wi-night-alt-cloudy-gusts"},
     "few" => {day: "wi-day-cloudy-high", night: "wi-night-alt-cloudy"},
     "sct" => {day: "wi-day-cloudy", night: "wi-night-alt-cloudy"},
     "bkn" => {day: "wi-day-cloudy", night: "wi-night-alt-cloudy"},
@@ -32,10 +34,9 @@ class Components::WeatherIcon < Components::Base
   private
 
   def icon_code
-    match = @icon_url&.match(/\/(?:day|night)\/([a-z_]+)/)
-    code = match ? match[1] : "unknown"
+    code = @icon_url[/\/(?:day|night)\/(?<code>[a-z_]+)/, :code]
 
-    mapping = ICON_MAPPING[code]
+    mapping = ICON_MAPPING.fetch(code, ICON_MAPPING["unknown"])
 
     @is_daytime ? mapping[:day] : mapping[:night]
   end
