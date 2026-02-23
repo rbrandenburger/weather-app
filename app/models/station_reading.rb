@@ -9,7 +9,7 @@ class StationReading < ApplicationRecord
     @fahrenheit_temp = celsius_to_fahrenheit(celsius_temp)
   end
 
-  # TODO: Why?
+  # Update celsius temp if attempting to set temp in fahrenheit
   def fahrenheit_temp=(temp_f)
     self.celsius_temp = fahrenheit_to_celsius(temp_f)
   end
@@ -27,10 +27,10 @@ class StationReading < ApplicationRecord
   end
 
   def feels_like(wind_speed, celsius: true)
-    # NWS reports wind chill when temp is lower than 50F, and wind speed is greater than 3mph.
+    # NWS reports wind chill when temp is lower than 50F, and wind speed is at least 3mph.
     # Heat index is reported when temp is over 80F
 
-    if fahrenheit_temp <= 50.0 && wind_speed > 3
+    if fahrenheit_temp <= 50.0 && wind_speed >= 3
       wind_chill(wind_speed, celsius: celsius)
     elsif fahrenheit_temp > 80.0
       heat_index(celsius: celsius)
@@ -57,7 +57,7 @@ class StationReading < ApplicationRecord
     if relative_humidity < 13.0 && fahrenheit_temp > 80.0 && fahrenheit_temp < 112.0
       hi -= ((13.0 - relative_humidity) / 4.0) * Math.sqrt((17.0 - (fahrenheit_temp - 95.0).abs) / 17.0)
     elsif relative_humidity > 85.0 && fahrenheit_temp > 80.0 && fahrenheit_temp < 87.0
-      hi += ((relative_humidity - 85.0) / 10) * (87 - fahrenheit_temp / 5)
+      hi += ((relative_humidity - 85.0) / 10) * ((87 - fahrenheit_temp) / 5)
     end
 
     celsius ? fahrenheit_to_celsius(hi) : hi
@@ -65,9 +65,14 @@ class StationReading < ApplicationRecord
 
   def wind_chill(wind_speed, celsius: true)
     # Formula copied from the NWS
-    # Wind speed must be in mph
+    # Wind speed must be in mph and at least 3 mph
 
-    ws = 35.74 + (0.6215 * fahrenheit_temp) - (35.75 * (wind_speed**0.16)) + (0.4275 * fahrenheit_temp * (wind_speed**0.16))
+    ws =
+      if wind_speed >= 3.0
+        35.74 + (0.6215 * fahrenheit_temp) - (35.75 * (wind_speed**0.16)) + (0.4275 * fahrenheit_temp * (wind_speed**0.16))
+      else
+        fahrenheit_temp
+      end
 
     celsius ? fahrenheit_to_celsius(ws) : ws
   end
