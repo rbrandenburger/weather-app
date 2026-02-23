@@ -2,7 +2,7 @@ class ReadingsController < ApplicationController
   UnauthorizedError = Class.new(StandardError)
 
   before_action :authorize_api_key, except: [:show]
- 
+
   # Skip CSRF for API actions
   skip_before_action :verify_authenticity_token, only: [:create]
 
