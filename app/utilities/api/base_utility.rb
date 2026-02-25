@@ -8,7 +8,7 @@ module Api
       def get_request(endpoint, params = {}, headers = {})
         response = client.get(endpoint, params, headers)
 
-        raise UtilityError, "Failed API request at #{endpoint}" unless response.success?
+        raise UtilityError, "failed API request at #{endpoint}" unless response.success?
 
         response.body
       end

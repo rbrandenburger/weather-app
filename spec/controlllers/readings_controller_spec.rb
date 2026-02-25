@@ -72,7 +72,7 @@ RSpec.describe ReadingsController, type: :request do
 
     around do |example|
       travel_to Time.parse("2026-01-01T23:59:59 -0600") do
-        VCR.use_cassette("readings_controller_test/success") do
+        VCR.use_cassette("readings_controller_tests/success") do
           example.run
         end
       end

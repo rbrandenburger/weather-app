@@ -7,7 +7,7 @@ class Api::SunriseSunsetUtility < Api::BaseUtility
 
       response_payload["results"].transform_values! do |time_string|
         Time.strptime("#{time_string} #{tz}", "%r %Z")
-      rescue ArgumentError
+      rescue ArgumentError # day length is left as a string
         time_string
       end
 
