@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.sunrise-sunset.org/json?lat=40.806862&lng=-96.681679
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.0
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      server:
+      - nginx
+      date:
+      - Wed, 25 Feb 2026 20:35:59 GMT
+      content-type:
+      - application/json
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      vary:
+      - Accept-Encoding
+      access-control-allow-origin:
+      - "*"
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-frame-options:
+      - DENY
+      x-content-type-options:
+      - nosniff
+      x-xss-protection:
+      - 1; mode=block
+      referrer-policy:
+      - origin
+      content-encoding:
+      - gzip
+    body:
+      encoding: ASCII-8BIT
+      string: '{"results":{"sunrise":"1:04:45 PM","sunset":"12:14:38 AM","solar_noon":"6:39:42
+        PM","day_length":"11:09:53","civil_twilight_begin":"12:38:34 PM","civil_twilight_end":"12:40:49
+        AM","nautical_twilight_begin":"12:06:46 PM","nautical_twilight_end":"1:12:37
+        AM","astronomical_twilight_begin":"11:35:03 AM","astronomical_twilight_end":"1:44:20
+        AM"},"status":"OK","tzid":"UTC"}'
+  recorded_at: Thu, 01 Jan 2026 06:00:00 GMT
+recorded_with: VCR 6.4.0

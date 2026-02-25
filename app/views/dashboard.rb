@@ -133,11 +133,4 @@ class Views::Dashboard < Views::Base
       end
     end
   end
-
-  def detail_item(label, value)
-    div(class: "pl-4 flex items-baseline") do
-      p(class: "text-sm font-medium tracking-wider") { "#{label}:" }
-      p(class: "px-2 text-md") { value }
-    end
-  end
 end

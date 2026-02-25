@@ -51,6 +51,13 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Compile assets
+        run: |
+          bundle exec rails tailwindcss:build
+          bundle exec rails assets:precompile
+        env:
+          RAILS_ENV: test
+          
       - name: Run tests
         env:
           RAILS_ENV: test
