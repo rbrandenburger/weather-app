@@ -61,6 +61,7 @@ group :test do
   gem "selenium-webdriver"
   gem "rspec-rails"
   gem "simplecov"
+  gem "vcr"
 end
 
 gem "phlex-rails", "~> 2.1"

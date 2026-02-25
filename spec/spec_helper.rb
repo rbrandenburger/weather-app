@@ -1,4 +1,5 @@
 require "rails_helper"
+require "vcr"
 
 require "simplecov"
 SimpleCov.start do
@@ -6,6 +7,12 @@ SimpleCov.start do
 end
 
 ENV["DEVICE_API_KEY"] = "test_api_key"
+
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/vcr_cassettes"
+  config.hook_into :faraday
+  config.configure_rspec_metadata!
+end
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -83,4 +90,5 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+  config.include ActiveSupport::Testing::TimeHelpers
 end

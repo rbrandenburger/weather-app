@@ -336,6 +336,7 @@ GEM
     unicode-emoji (4.2.0)
     uri (1.1.1)
     useragent (0.16.11)
+    vcr (6.4.0)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -377,6 +378,7 @@ DEPENDENCIES
   tailwindcss-rails (~> 4.4)
   turbo-rails
   tzinfo-data
+  vcr
   web-console
 
 BUNDLED WITH
