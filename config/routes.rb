@@ -7,5 +7,7 @@ Rails.application.routes.draw do
 
   get "/" => "readings#show"
 
+  get "/history" => "readings#list"
+
   root "readings#show"
 end

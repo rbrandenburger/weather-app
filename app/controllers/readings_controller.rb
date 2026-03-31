@@ -1,7 +1,7 @@
 class ReadingsController < ApplicationController
   UnauthorizedError = Class.new(StandardError)
 
-  before_action :authorize_api_key, except: [:show]
+  before_action :authorize_api_key, except: [:show, :list]
 
   # Skip CSRF for API actions
   skip_before_action :verify_authenticity_token, only: [:create]
@@ -42,6 +42,12 @@ class ReadingsController < ApplicationController
         "sun_info" => sunrise_sunset
       }
     )
+  end
+
+  def list
+    timestamp = params[:timestamp] || Time.zone.now
+
+    render body: timestamp.to_s
   end
 
   private

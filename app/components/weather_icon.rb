@@ -3,6 +3,7 @@ class Components::WeatherIcon < Components::Base
     "skc" => {day: "wi-day-sunny", night: "wi-night-clear"},
     "wind_skc" => {day: "wi-day-windy", night: "wi-wind-strong"},
     "wind_skt" => {day: "wi-day-cloudy-gusts", night: "wi-night-alt-cloudy-gusts"},
+    "wind_bkn" => {day: "wi-strong-wind", night: "wi-strong-wind"},
     "few" => {day: "wi-day-cloudy-high", night: "wi-night-alt-cloudy"},
     "sct" => {day: "wi-day-cloudy", night: "wi-night-alt-cloudy"},
     "bkn" => {day: "wi-day-cloudy", night: "wi-night-alt-cloudy"},
